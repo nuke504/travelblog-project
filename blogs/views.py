@@ -63,3 +63,13 @@ def delete(request, blog_id):
             blog.delete()
             bloggerID = Blogger.objects.get(user = request.user).id
             return redirect('profile',bloggerID)
+
+def search(request):
+    terms = request.GET['searchTerm']
+    terms = terms.split()
+    results = []
+    for term in terms:
+        for blog in Blog.objects.all():
+            if term.lower() in blog.body.lower():
+                results.append(blog)
+    return render(request, 'blogs/search.html', {'results':results})

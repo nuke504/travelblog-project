@@ -61,8 +61,10 @@
       {% if user.is_authenticated %}
       <a class="nav-link" href="{% url 'create_blog' %}"><span class="oi oi-plus"></span></a>
       {% endif %}
-        <input class="form-control mr-sm-2 markerfelt-font" type="text" placeholder="Search" aria-label="Search">
+        <form action="{% url 'search' %}">
+        <input class="form-control mr-sm-2 markerfelt-font" type="text" placeholder="Search" name="searchTerm" aria-label="Search">
         <button class="btn btn-light my-2 my-sm-0 mr-2 markerfelt-font" type="submit">Search</button>
+        </form>
         {% if not user.is_authenticated %}
         <a href="{% url 'login' %}" class="btn btn-dark my-2 my-sm-0 markerfelt-font" role="button">Login</a>
         {% else %}

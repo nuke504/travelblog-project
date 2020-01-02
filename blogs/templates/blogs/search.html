@@ -4,5 +4,36 @@
 {% if error %}
 <div class="mb-3 mt-3 alert alert-danger container">{{ error }}</div>
 {% endif %}
-Search
+
+<div class="album py-5">
+    <div class="container">
+
+      <div class="row">
+
+        {% for blog in results %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            {% if blog.image.url is not None %}
+            <div class="bd-placeholder-img card-img-top with-bg-size" style="background-image: url('{{blog.image.url}}');"></div>
+            {% else %}
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
+            {% endif %}
+            <div class="card-body">
+              <p class="card-text font-weight-bold">{{blog.title}}</p>
+              <p class="card-text">{{blog.summary}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a href="{% url 'detail' blog.id%}" class="btn btn-sm btn-outline-secondary" role="button">View</a>
+                </div>
+                <small class="text-muted">{{blog.pub_date_pretty}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
