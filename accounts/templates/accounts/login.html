@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if error %}
+<div class="mb-3 mt-3 alert alert-danger container">{{ error }}</div>
+{% endif %}
+<div class="row">
+    <div class="col-5 pt-4">
+        <img src="{% static 'login.png' %}" class="rounded float-right " height=185 width=185 />
+    </div>
+    <div class="col-8 mt-3 mb-3" style="max-width: 500px">
+    <div class="col-md-8 order-md-1">
+    <h4 class="mb-3 herculanum-font"><font size="6">Login</font></h4>
+    <form class="needs-validation" novalidate method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="mb-2">
+        <label for="username">Username</label>
+        <div class="input-group">
+        <input type="text" class="form-control" id="username" placeholder="Username" name="username" required>
+        <div class="invalid-feedback" style="width: 100%;">
+            Your username is required.
+        </div>
+        </div>
+    </div>
+
+    <div class="mb-2">
+        <label for="username">Password</label>
+        <div class="input-group">
+        <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+        <div class="invalid-feedback" style="width: 100%;">
+            Password is required.
+        </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+    </form>
+    </div>
+    </div>
+</div>
+<script src={% static 'form-validation.js'%}></script>
+{% endblock %}

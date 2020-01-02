@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if error %}
+<div class="mb-3 mt-3 alert alert-danger container">{{ error }}</div>
+{% endif %}
+Search
+{% endblock %}

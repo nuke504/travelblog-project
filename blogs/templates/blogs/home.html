@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div id="myCarousel" class="carousel slide mb-5" data-ride="carousel">
+    <ol class="carousel-indicators">
+    {% for banner in bannerBlogs %}
+      <li data-target="#myCarousel" data-slide-to="{{forloop.counter0}}" {% if forloop.counter0 == 0 %}class="Active"{% endif %}></li>
+    {% endfor %}
+    </ol>
+    <div class="carousel-inner">
+    {% for banner in bannerBlogs %}
+    {% if forloop.counter0 == 0 %}
+      <div class="carousel-item active">
+      {% else %}
+      <div class="carousel-item">
+      {% endif %}
+      <div class="bd-placeholder-img card-img-top with-bg-size-banner" style="background-image: url('{{banner.image.url}}');"></div>
+        <div class="container">
+          <div class="carousel-caption text-left">
+            <h1>{{banner.title}}</h1>
+            <p>{{banner.summary}}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+</div>
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+    
+  <div class="container marketing">
+  <h2 class="markerfelt-font pb-4">The Bloggers</h2>
+    <div class="row">
+    <!-- Three columns of text below the carousel -->
+    {% for blogger in bloggers.all %}
+      <div class="col-lg-4">
+      {% if blogger.profilepic.url is not None %}
+      <img src="{{ blogger.profilepic.url }}" class="img-fluid" width="140" height="140" style="border-radius: 50%;"/>
+      {% else %}
+      <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+      {% endif %}
+      <h2 class="markerfelt-font mt-2">{{ blogger.displayName }}</h2>
+      <p>{{ blogger.description }}</p>
+      <p><a class="btn btn-secondary" href="{% url 'profile' blogger.id %}" role="button">See more &raquo;</a></p>
+    </div><!-- /.col-lg-4 -->
+    {% endfor %}
+    </div>
+
+<hr />
+<h2 class="herculanum-font"><strong>Recent Posts</strong></h2>
+{% for blog in blogsList %}
+{% if forloop.counter|divisibleby:2 %}
+<div class="row featurette">
+    <div class="col-md-7 order-md-2" onclick="window.location='{% url 'detail' blog.id %}';" style="cursor: pointer;">
+    <h2 class="featurette-heading herculanum-font">{{ blog.title }}</h2>
+    <p class="lead">{{ blog.summary }}</p>
+    </div>
+    <div class="col-md-5 order-md-1">
+    <img src="{{ blog.image.url }}" class="featurette-image img-fluid mx-auto img-fluid" width="500" height="500" />
+    </div>
+</div>
+{% else %}
+<div class="row featurette">
+    <div class="col-md-7" onclick="window.location='{% url 'detail' blog.id %}';" style="cursor: pointer;">
+    <h2 class="featurette-heading herculanum-font">{{ blog.title }}</h2>
+    <p class="lead">{{ blog.summary }}</p>
+    </div>
+    <div class="col-md-5">
+    <img src="{{ blog.image.url }}" class="featurette-image img-fluid mx-auto img-fluid" width="500" height="500" />
+    </div>
+</div>
+{% endif %}
+<hr class="featurette-divider">
+{% endfor %}
+
+<div class="container">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+<br />
+{% endblock %}

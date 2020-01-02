@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if error %}
+<div class="mb-3 mt-3 alert alert-danger container">{{ error }}</div>
+{% endif %}
+<main role="main" class="container">
+  <div class="blog-main pt-3">
+      <div class="blog-post">
+        <h2 class="blog-post-title herculanum-font">{{ blog.title }}</h2>
+        <div class="row">
+        <div class="col-6">
+        <p class="blog-post-meta">{{ blog.pub_date_pretty }} by <a href="{% url 'profile' blog.blogger.id %}">{{ blog.blogger.displayName }}</a></p>
+        </div>
+        <div class="col-3">
+        {% if user.username not in blog.getUsers %}
+        <a href="javascript:{document.getElementById('upvote').submit()}"><p class="text-right"><span class="oi oi-thumb-up"></span> Like {{ blog.votes_total }}</p></a>
+        {% elif user.username in blog.getUsers %}
+        <p class="text-right"><span class="oi oi-thumb-up"></span> Liked {{ blog.votes_total }}</p>
+        {% endif %}
+        </div>
+        </div>
+        <img src="{{ blog.image.url }}" class="featurette-image rounded img-fluid" width="800" height="800" />
+        <div class="pt-3"><p>{{ blog.body }}</p></div>
+    </div><!-- /.blog-main -->
+
+  </div><!-- /.row -->
+<form id='upvote' method="POST" action="{% url 'upvote' blog.id %}">
+{% csrf_token %}
+<input type="hidden">
+</form>
+</main><!-- /.container -->
+{% endblock %}
