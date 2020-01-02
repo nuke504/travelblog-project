@@ -11,3 +11,5 @@ local_settings.py
 /static
 .DS_Store
 .vscode
+.env.prod
+.env.prod.db

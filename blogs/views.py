@@ -1,4 +1,4 @@
-import numpy as np
+import random
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
@@ -13,7 +13,7 @@ def home(request):
     if len(allBlogs) > 3:
         allBlogs = allBlogs.order_by('-id')[0:3]
     if len(bannerBlogs) > 3:
-        bannerBlogs = np.random.choice(bannerBlogs, 3, replace = False)
+        bannerBlogs = random.sample(bannerBlogs, 3)
     return render(request, 'blogs/home.html', {'bloggers':Blogger.objects,'blogsList':allBlogs, 'bannerBlogs':bannerBlogs})
 
 @login_required
